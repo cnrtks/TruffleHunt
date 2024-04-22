@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://uuk3rqtsqcge"]
+
+[ext_resource type="Script" path="res://game_pieces/dog.gd" id="1_13pc8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ebt5q"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_to86w"]
+material = SubResource("StandardMaterial3D_ebt5q")
+
+[node name="Dog" type="Node3D"]
+script = ExtResource("1_13pc8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("PrismMesh_to86w")
+
+[node name="Timer" type="Timer" parent="."]

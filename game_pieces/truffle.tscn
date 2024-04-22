@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bo823vc8d0jew"]
+
+[ext_resource type="Script" path="res://game_pieces/truffle.gd" id="1_t4prg"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_8t8gs"]
+radius = 0.2
+height = 0.4
+
+[node name="Truffle" type="Node3D"]
+script = ExtResource("1_t4prg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("SphereMesh_8t8gs")

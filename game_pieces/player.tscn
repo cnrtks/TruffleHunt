@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://batfemvbnric1"]
+
+[ext_resource type="Script" path="res://game_pieces/player.gd" id="1_pktae"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_67l4b"]
+
+[node name="Player" type="Node3D"]
+script = ExtResource("1_pktae")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_67l4b")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 10)
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]

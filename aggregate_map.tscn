@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://t5gjwcayy8sn"]
+
+[ext_resource type="Script" path="res://aggregate_map.gd" id="1_fwh4j"]
+
+[node name="AggregateMap" type="Node"]
+script = ExtResource("1_fwh4j")
