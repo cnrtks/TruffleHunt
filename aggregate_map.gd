@@ -1,9 +1,11 @@
 extends Node
 
+@onready var parent = get_parent()
 var aggregate_array = []
 var astar = HexStar.new()
 var grid_map
 var map
+
 class HexStar:
 	extends AStar3D
 	func _compute_cost(from_id, to_id):
@@ -15,6 +17,7 @@ func ready_aggregate_array(_grid_map):
 	grid_map = _grid_map
 	var coord_array = grid_map.get_used_cells()
 	aggregate_array.resize(coord_array.size())
+	print(coord_array)
 	for c in coord_array:
 		var unified_index = astar.get_available_point_id()
 		astar.add_point(unified_index, c, 0.5)

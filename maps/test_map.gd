@@ -1,31 +1,56 @@
 extends Node3D
 
+var player = preload("res://game_pieces/player.tscn")
+#this is a singhleton and shhould probably be an instantiated child but intatniting it caused problems at runtime due to lack of placement
+var Player
+var pet = preload("res://game_pieces/dog.tscn")
 var pine = preload("res://game_pieces/pine.tscn")
 var truffle = preload("res://game_pieces/truffle.tscn")
 
-@export var player_spawn: Vector3i = Vector3i(9,0,9)
-@export var pet_spawn: Vector3i = Vector3i(10 ,0, 10)
+#TODO: these index numbers are hard coded to the order of the items in the Grid map, should be pased in from parent
+#change the order of grid map so that spawners are firs(or last) and are grouped based on behavior
+#if you end up with extra tiles in the grid map which should not be there, dlete it, reload, export the tiles, then close and reopen
+var spawn_tiles = [0, 1, 3,]
+
+#@export var pet_spawn: Vector3i = Vector3i(10 ,0, 10)
 var pine_spawn = [Vector3i(5,0, 9)]
 
 #map ready functions
 func _ready():
 	$AggregateMap.ready_aggregate_array($GridMap)
-	plant_trees()
-#learn how to make constructors in gdscript
-	$Player.aggregate_map = $AggregateMap
-	$Dog.aggregate_map = $AggregateMap
-	$Dog.follow_target = $Player
-	$Player.place_at_map_coords(player_spawn, true)
-	$Dog.place_at_map_coords(pet_spawn, true)
-	#walk_to_far_cell($Player, Vector3i(9,0,9))
+	spawn_from_grid_map()
 
-func plant_trees():
-	for p in pine_spawn:
-		var new_pine = pine.instantiate()
-		new_pine.aggregate_map = $AggregateMap
-		add_child(new_pine)
-		var aggregate_index = new_pine.place_at_map_coords(p, true)
-		new_pine.dig_tiles = plant_truffle(aggregate_index)
+#TODO:this should probably be in aggregate map or combined with the ready function
+func spawn_from_grid_map():
+	var used_cells = $AggregateMap.grid_map.get_used_cells()
+	for c in used_cells:
+		var tile_index = $AggregateMap.grid_map.get_cell_item(c)
+		if spawn_tiles.has(tile_index): spawn_tile(c, tile_index)
+
+func spawn_tile(map_coordinates, grid_item_index):
+#TODO: some of this is too specific to the case (player being a singleton here makes noi sense and dog getting player here makes no sense)
+	match grid_item_index:
+		0: 
+			Player = spawn_game_piece(player, map_coordinates, true)
+		1:
+			var new_pet = spawn_game_piece(pet, map_coordinates, true)
+			new_pet.follow_target = Player
+		3: plant_tree(pine, map_coordinates, true)
+		_: print("spawn for %i not implemented", grid_item_index)
+
+#TODO: this adds inherited variables which shoudl maybe be done elsewhere
+func spawn_game_piece(game_piece, map_coordinates, disabled):
+	var new_piece = game_piece.instantiate()
+	add_child(new_piece)
+	new_piece.aggregate_map = $AggregateMap
+	new_piece.place_at_map_coords(map_coordinates, disabled)
+	return new_piece
+
+func plant_tree(game_piece, map_coordinates, disabled):
+	var new_pine = spawn_game_piece(game_piece, map_coordinates, true)
+	print("here")
+	print(new_pine.cell.index)
+	new_pine.dig_tiles = plant_truffle(new_pine.cell.index)
 
 #TODO: this does not take imnto account truffle blockers(other truffles, neraby trees)
 func plant_truffle(pine_index):

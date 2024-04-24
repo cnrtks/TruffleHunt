@@ -9,7 +9,6 @@ var follow_target = null
 var rummage_tween = null
 
 func _ready():
-	follow_target = get_tree().root.get_node("Main/Player")
 	walk_speed = 1
 	add_state("IDLE")
 	add_state("IN_TRANSIT")
@@ -56,10 +55,11 @@ func walk_to_nearby_tile():
 	var random_neighbor = get_neighbors_in_range(idle_search).pick_random()
 	walk_to_far_cell(aggregate_map.aggregate_array[random_neighbor])
 
+#TODO:figure out how to handle null without crashes on this stupid fuckig platform
 func walk_near_follow_target():
 	if follow_target != null:
 		var random_neighbor = follow_target.get_neighbors_in_range(idle_search).pick_random()
-		walk_to_far_cell(aggregate_map.aggregate_array[random_neighbor])
+		if random_neighbor != null: walk_to_far_cell(aggregate_map.aggregate_array[random_neighbor])
 
 func dig():
 #TODO: replace this with animation

@@ -22,18 +22,22 @@ func place_at_aggregate_index(aggregate_index, disable_cell):
 	if disable_cell: aggregate_map.astar.set_point_disabled(aggregate_index)
 
 func walk_to_next_cell(_cell):
-	walk_tween = create_tween()
-	walk_tween.tween_property(self, "position", _cell.local, self.walk_speed)
-	await walk_tween.finished
+#TODO: exception handling which probably shoudl not be here
+	if _cell != null:
+		walk_tween = create_tween()
+		walk_tween.tween_property(self, "position", _cell.local, self.walk_speed)
+		await walk_tween.finished
 
 #does not wrok with occupied cells
 func walk_to_far_cell(destination_cell):
-	var path = aggregate_map.astar.get_point_path(cell.index, destination_cell.index)
-	walk_tween = create_tween()
-	for p in path:
-		walk_tween.tween_property(self, "position", aggregate_map.grid_map.map_to_local(p), walk_speed)
-	await walk_tween.finished
-	aggregate_map.switch_occupant_cells(self, destination_cell.index)
+	#TODO: exception handling which probably shoudl not be here
+	if destination_cell != null:
+		var path = aggregate_map.astar.get_point_path(cell.index, destination_cell.index)
+		walk_tween = create_tween()
+		for p in path:
+			walk_tween.tween_property(self, "position", aggregate_map.grid_map.map_to_local(p), walk_speed)
+		await walk_tween.finished
+		aggregate_map.switch_occupant_cells(self, destination_cell.index)
 
 #currently returns the start position as part of the results
 #can probably be modified to return only the outer ring

@@ -1,0 +1,13 @@
+dog and player occupy cells, make sure that they dojnt blocke each other
+a bunch of != null exception handling should probably be consolidated
+
+
+
+
+
+bull AI
+grass level
+snowy bridge level leads to doctor house and grass level
+hell (suburbs)
+dream (grey, apple death) level
+temple level (minoutaur, flamingone is  bird hyroglyoph etc)
