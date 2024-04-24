@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm2uiimdx4f4v"]
+
+[ext_resource type="Script" path="res://game_pieces/bull.gd" id="1_02jf6"]
+
+[node name="Bull" type="Node3D"]
+script = ExtResource("1_02jf6")
