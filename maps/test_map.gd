@@ -12,9 +12,6 @@ var truffle = preload("res://game_pieces/truffle.tscn")
 #if you end up with extra tiles in the grid map which should not be there, dlete it, reload, export the tiles, then close and reopen
 var spawn_tiles = [0, 1, 3,]
 
-#@export var pet_spawn: Vector3i = Vector3i(10 ,0, 10)
-var pine_spawn = [Vector3i(5,0, 9)]
-
 #map ready functions
 func _ready():
 	$AggregateMap.ready_aggregate_array($GridMap)
