@@ -1,9 +1,9 @@
 extends ParticipantFSM
 
 class_name Player
-var facing = 0
 #TODO: deadzone should be handled by input mapping
 var deadzone = 0.5
+var facing = 0
 
 func _ready():
 	walk_speed = 0.3

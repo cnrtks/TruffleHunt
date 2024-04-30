@@ -46,6 +46,7 @@ func switch_occupant_cells(occupant, to_index):
 	aggregate_array[to_index].occupant = occupant
 	occupant.cell = aggregate_array[to_index]
 
+#recieves a vector3i and returns -1 if not found .. i think
 func get_index_from_coords(coords):
 #this is using filter becasue custom search (custom_first) do not yet exist in godot, please replace if they are implemented
 	var array_of_one = aggregate_array.filter(func(cell): return cell.map == coords)

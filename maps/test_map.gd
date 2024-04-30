@@ -1,16 +1,17 @@
 extends Node3D
 
-var player = preload("res://game_pieces/player.tscn")
-#this is a singhleton and shhould probably be an instantiated child but intatniting it caused problems at runtime due to lack of placement
+#this is a singleton but it gets a child of player when the map is being gnerated becasue its using a spawn tile, maybe fix this
 var Player
+var player = preload("res://game_pieces/player.tscn")
 var pet = preload("res://game_pieces/dog.tscn")
+var bull = preload("res://game_pieces/bull.tscn")
 var pine = preload("res://game_pieces/pine.tscn")
 var truffle = preload("res://game_pieces/truffle.tscn")
 
 #TODO: these index numbers are hard coded to the order of the items in the Grid map, should be pased in from parent
 #change the order of grid map so that spawners are firs(or last) and are grouped based on behavior
 #if you end up with extra tiles in the grid map which should not be there, dlete it, reload, export the tiles, then close and reopen
-var spawn_tiles = [0, 1, 3,]
+var spawn_tiles = [0, 1, 2, 3,]
 
 #map ready functions
 func _ready():
@@ -32,6 +33,8 @@ func spawn_tile(map_coordinates, grid_item_index):
 		1:
 			var new_pet = spawn_game_piece(pet, map_coordinates, true)
 			new_pet.follow_target = Player
+		2:
+			var new_bull = spawn_game_piece(bull, map_coordinates, true)
 		3: plant_tree(pine, map_coordinates, true)
 		_: print("spawn for %i not implemented", grid_item_index)
 
