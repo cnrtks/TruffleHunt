@@ -39,10 +39,11 @@ func _set_cell(_index, _grid_map, _grid_map_local, _occupant):
 		}
 
 #TODO: determine which funcituon should be assigning the current cell to the participant, it may not be this one
+#changing cells seems like a state machine transitions job, move to the IN TRANSIT section of
 func switch_occupant_cells(occupant, to_index):
-	astar.set_point_disabled(occupant.cell.index, false)
+	#astar.set_point_disabled(occupant.cell.index, false)
 	occupant.cell.occupant = null
-	astar.set_point_disabled(to_index)
+	#astar.set_point_disabled(to_index)
 	aggregate_array[to_index].occupant = occupant
 	occupant.cell = aggregate_array[to_index]
 

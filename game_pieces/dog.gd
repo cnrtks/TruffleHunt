@@ -34,26 +34,21 @@ func _enter_state(new_state, old_state):
 		States.IDLE:
 			if follow_target != null:
 				walk_near_follow_target()
+		States.RUMMAGING:
+			rummage()
 
 func _exit_state(old_state, new_state):
 	if old_state == States.IN_TRANSIT && new_state == States.IDLE:
-		#this timer should be interrupted by commands and stuff
-		await get_tree().create_timer(3).timeout
-		rummage()
+		set_state(States.RUMMAGING)
 
 #a geneeric animation for when the dog is not really doing anything important just sniffing the ground and stuff
 func rummage():
 #TODO: replace this tween wityh an animation
-	var idle_tween = create_tween().set_loops(3)
-	idle_tween.tween_property(self, "position:y", 1, 2)
-	idle_tween.tween_property(self, "position:y", .5, 2)
-	await idle_tween.finished
+	rummage_tween = create_tween().set_loops(3)
+	rummage_tween.tween_property(self, "position:y", .5, 2)
+	rummage_tween.tween_property(self, "position:y", 0, 2)
+	#await rummage_tween.finished
 	#change_state(State.IN_TRANSIT)
-
-#this could probably just be deleted, it gets the dog to just sort of wander around
-func walk_to_nearby_tile():
-	var random_neighbor = get_neighbors_in_range(idle_search).pick_random()
-	walk_to_far_cell(aggregate_map.aggregate_array[random_neighbor])
 
 #TODO:figure out how to handle null without crashes on this stupid fuckig platform
 func walk_near_follow_target():

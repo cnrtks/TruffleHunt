@@ -1,12 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://4x7ifq2rq3gk"]
+[gd_scene load_steps=4 format=3 uid="uid://4x7ifq2rq3gk"]
 
 [ext_resource type="Script" path="res://game_pieces/pine.gd" id="1_64ayl"]
 [ext_resource type="Texture2D" uid="uid://c7ch3b61umhgr" path="res://assets/tree.svg" id="2_8x4fb"]
 
-[node name="Tree" type="Node3D" groups=["trees"]]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_trhl8"]
+
+[node name="Tree" type="Node3D" groups=["Tree"]]
 script = ExtResource("1_64ayl")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0244408, 2.3372, 0.0995641)
 billboard = 2
 texture = ExtResource("2_8x4fb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Sprite3D"]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sprite3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0244408, -1.3372, -0.0995641)
+shape = SubResource("CylinderShape3D_trhl8")

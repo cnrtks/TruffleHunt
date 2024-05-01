@@ -3,7 +3,8 @@ extends Node3D
 class_name GamePiece
 var aggregate_map
 var cell
-var walk_speed
+#TODO: Generic walk speed which can be overwritten in the ready of each game peice, or remove thisd once the speeds and tweens are sorted out
+var walk_speed = 3
 var walk_tween
 
 func place_at(_cell):
@@ -33,6 +34,7 @@ func walk_to_far_cell(destination_cell):
 	#TODO: exception handling which probably shoudl not be here
 	if destination_cell != null:
 		var path = aggregate_map.astar.get_point_path(cell.index, destination_cell.index)
+		print(path)
 		walk_tween = create_tween()
 		for p in path:
 			walk_tween.tween_property(self, "position", aggregate_map.grid_map.map_to_local(p), walk_speed)

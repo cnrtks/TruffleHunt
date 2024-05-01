@@ -4,7 +4,6 @@ var States = {}
 var state = null:
 	set = set_state
 var previous_state = null
-
 @onready var parent = get_parent()
 
 func _process(delta):

@@ -37,7 +37,7 @@ func _exit_state(old_state, new_state):
 
 func _handle_move_input():
 	if state == States.IDLE:
-		if Input.is_action_pressed("select"): parent.player_selected_cell()
+		if Input.is_action_pressed("select"): player_selected_cell()
 		var x = Input.get_joy_axis(0, JOY_AXIS_LEFT_X)
 		var y = Input.get_joy_axis(0, JOY_AXIS_LEFT_Y)
 		if x > deadzone || x < -deadzone || y > deadzone || y < -deadzone: move_player(x,y)
@@ -63,5 +63,5 @@ func get_index_player_facing():
 
 func player_selected_cell():
 	var selected_cell = get_index_player_facing()
-	if selected_cell && $AggregateMap.aggregate_array[selected_cell].occupant:
-		print($AggregateMap.aggregate_array[selected_cell].occupant)
+	if selected_cell && aggregate_map.aggregate_array[selected_cell].occupant:
+		print(aggregate_map.aggregate_array[selected_cell].occupant)

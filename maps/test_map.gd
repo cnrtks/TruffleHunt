@@ -2,6 +2,7 @@ extends Node3D
 
 #this is a singleton but it gets a child of player when the map is being gnerated becasue its using a spawn tile, maybe fix this
 var Player
+var Pet
 var player = preload("res://game_pieces/player.tscn")
 var pet = preload("res://game_pieces/dog.tscn")
 var bull = preload("res://game_pieces/bull.tscn")
@@ -29,13 +30,16 @@ func spawn_tile(map_coordinates, grid_item_index):
 #TODO: some of this is too specific to the case (player being a singleton here makes noi sense and dog getting player here makes no sense)
 	match grid_item_index:
 		0: 
-			Player = spawn_game_piece(player, map_coordinates, true)
+			Player = spawn_game_piece(player, map_coordinates, false)
+			#TODO: this is only here in case the pet spawner is placed down after the player tile, this can be removed if you are consistent in tile placement for the map
+			if Pet != null:
+				Pet.follow_target = Player
 		1:
-			var new_pet = spawn_game_piece(pet, map_coordinates, true)
-			new_pet.follow_target = Player
+			Pet = spawn_game_piece(pet, map_coordinates, false)
+			Pet.follow_target = Player
 		2:
-			var new_bull = spawn_game_piece(bull, map_coordinates, true)
-		3: plant_tree(pine, map_coordinates, true)
+			var new_bull = spawn_game_piece(bull, map_coordinates, false)
+		3: plant_tree(pine, map_coordinates)
 		_: print("spawn for %i not implemented", grid_item_index)
 
 #TODO: this adds inherited variables which shoudl maybe be done elsewhere
@@ -46,10 +50,8 @@ func spawn_game_piece(game_piece, map_coordinates, disabled):
 	new_piece.place_at_map_coords(map_coordinates, disabled)
 	return new_piece
 
-func plant_tree(game_piece, map_coordinates, disabled):
+func plant_tree(game_piece, map_coordinates):
 	var new_pine = spawn_game_piece(game_piece, map_coordinates, true)
-	print("here")
-	print(new_pine.cell.index)
 	new_pine.dig_tiles = plant_truffle(new_pine.cell.index)
 
 #TODO: this does not take imnto account truffle blockers(other truffles, neraby trees)
