@@ -1,4 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://bv4kexf0fl2ir"]
+[gd_scene load_steps=13 format=3 uid="uid://bv4kexf0fl2ir"]
+
+[ext_resource type="Material" uid="uid://dwnu1vjbjylns" path="res://grass_tile_material_green.tres" id="1_ao7d5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ndbo"]
 albedo_color = Color(1, 1, 0, 1)
@@ -43,17 +45,15 @@ radial_steps = 6
 sections = 2
 section_rings = 1
 
-[sub_resource type="Gradient" id="Gradient_r46f2"]
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_1vm2h"]
-gradient = SubResource("Gradient_r46f2")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uhylt"]
-albedo_color = Color(0.509804, 0.819608, 0.45098, 1)
-albedo_texture = SubResource("GradientTexture1D_1vm2h")
-
 [sub_resource type="TubeTrailMesh" id="TubeTrailMesh_hmdnv"]
-material = SubResource("StandardMaterial3D_uhylt")
+material = ExtResource("1_ao7d5")
+radius = 1.0
+radial_steps = 6
+sections = 2
+section_rings = 1
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_w6cjm"]
+material = ExtResource("1_ao7d5")
 radius = 1.0
 radial_steps = 6
 sections = 2
@@ -103,4 +103,13 @@ mesh = SubResource("TubeTrailMesh_hmdnv")
 [node name="StaticBody3D" type="StaticBody3D" parent="GrassTile"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GrassTile/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_kxge5")
+
+[node name="GrassTile2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
+mesh = SubResource("TubeTrailMesh_w6cjm")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="GrassTile2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GrassTile2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_kxge5")
