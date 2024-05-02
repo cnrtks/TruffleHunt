@@ -1,10 +1,11 @@
 extends Node
 
 @onready var parent = get_parent()
+#TODO: this could be a dictionary instead as all should be unique and the indexes wont need to be saved in two places, if dictionalry
 var aggregate_array = []
 var astar = HexStar.new()
 var grid_map
-var map
+#var map
 
 class HexStar:
 	extends AStar3D

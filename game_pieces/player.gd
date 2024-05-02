@@ -3,7 +3,6 @@ extends ParticipantFSM
 class_name Player
 #TODO: deadzone should be handled by input mapping
 var deadzone = 0.5
-var facing = 0
 
 func _ready():
 	walk_speed = 0.3
@@ -43,25 +42,10 @@ func _handle_move_input():
 		if x > deadzone || x < -deadzone || y > deadzone || y < -deadzone: move_player(x,y)
 
 func move_player(x_axis, y_axis):
-	facing = int((atan2(y_axis, x_axis)/PI+1)*3)
-	var next_index = get_index_player_facing()
-	if next_index != null && !aggregate_map.astar.is_point_disabled(next_index):
-		walk_to_next_cell(aggregate_map.aggregate_array[next_index])
-		aggregate_map.switch_occupant_cells(self, next_index)
-
-func get_index_player_facing():
-	var south = facing > 2
-	var next_index
-	if facing % 3 == 1:
-		next_index = aggregate_map.get_index_from_coords(Vector3i(cell.map.x, 0 , cell.map.z + (2 if south else -2)))
-	else:
-		next_index = aggregate_map.get_index_from_coords(Vector3i(cell.map.x + (
-			1 if facing == 2 || facing == 3 else -1),
-			0,
-			cell.map.z + (1 if south else -1)))
-	return next_index
+	facing = get_facing_from_angle(y_axis,x_axis)
+	move_to_next_cell_from_facing()
 
 func player_selected_cell():
-	var selected_cell = get_index_player_facing()
+	var selected_cell = get_index_next_tile_facing()
 	if selected_cell && aggregate_map.aggregate_array[selected_cell].occupant:
 		print(aggregate_map.aggregate_array[selected_cell].occupant)

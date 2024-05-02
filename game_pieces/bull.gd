@@ -7,9 +7,9 @@ var debug_marker = preload("res://game_pieces/debug_marker.tscn")
 @export var visible_range_short = 3
 @export var visible_range_long = 5
 @export var idle_search = 2
-var facing = 0
 #if target is a location it sets bull to walk but if target is a game peicer its charign, this is perhaps a stupid way of doijng things
 var target = null
+var looking_at_while_charging = null
 var scan_ray_tween = null
 var graze_tween = create_tween()
 const ANGLE_OFFSET = TAU / 12 - PI
@@ -24,6 +24,7 @@ func _ready():
 	add_state("SCANNING")
 	add_state("TRACKING")
 	add_state("CHARGING")
+	add_state("LOOSING_CHARGE_TARGET")
 	call_deferred("set_state", States.SCANNING)
 
 
@@ -31,12 +32,28 @@ func _ready():
 	#called in _processs
 	#only put things in here that should fire on every update but should always be firing if enabled, i guess
 func _state_logic(delta):	
-	var short_range_target = $Horn/RayCastRage.get_collider()
-	var long_range_target = $Horn/RayCastCurious.get_collider()
-	if short_range_target != null:
-		short_range_targets[short_range_target.get_parent().get_parent()] = true
-	if long_range_target != null && long_range_target != short_range_target:
-		long_range_targets[long_range_target.get_parent().get_parent()] = true
+	match state:
+		States.SCANNING:
+			var short_range_target = $Horn/RayCastRage.get_collider()
+			var long_range_target = $Horn/RayCastCurious.get_collider()
+			if short_range_target != null:
+				short_range_targets[short_range_target.get_parent().get_parent()] = true
+			if long_range_target != null && long_range_target != short_range_target:
+				long_range_targets[long_range_target.get_parent().get_parent()] = true
+		States.CHARGING, States.LOOSING_CHARGE_TARGET:
+			var space = get_world_3d().direct_space_state
+#TODO: this is a really hacky way of detecting that they are on the same cell, proabyl should not do it like this, use collision detection instead, but also this is needed in order to prevent crashing when both occupy the same cell
+#remove the if statement and replace inards with crash handlking, removle the else statem,emnt
+			if target.cell.occupant == null:
+				print("bull killed whoever")
+				target = null
+				set_state(States. GRAZING)
+			else:
+				var ray_query = PhysicsRayQueryParameters3D.create(position + Vector3(0, 0.5, 0), target.cell.occupant.position + Vector3(0, 0.5, 0), 0xffffffff, [])
+				var intersect = space.intersect_ray(ray_query)
+				if !intersect.is_empty():
+					looking_at_while_charging = intersect.collider.get_parent().get_parent()
+			
 
 	#called in _process
 func _get_transition(delta):
@@ -45,15 +62,28 @@ func _get_transition(delta):
 			if walk_tween != null && walk_tween.is_running(): return States.TRACKING
 		States.TRACKING:
 			if !walk_tween.is_running():
-				if target: return States.SCANNING
+				if typeof(target) == TYPE_DICTIONARY:
+					target = null
+					return States.SCANNING
 				else: return States.GRAZING
 		States.SCANNING:
 			if scan_ray_tween != null && !scan_ray_tween.is_running():
 				return States.TRACKING
+#This is here so it rotates on the spot during debug
 				#return States.GRAZING
 		States.GRAZING:
 			if !graze_tween.is_running():
 				return States.SCANNING
+		States.CHARGING:
+			if target != looking_at_while_charging:
+				return States.LOOSING_CHARGE_TARGET
+			elif target && !walk_tween.is_running():
+				move_bull_closer_to_target()
+		States.LOOSING_CHARGE_TARGET:
+			if target == looking_at_while_charging:
+				return States.CHARGING
+			elif target && !walk_tween.is_running():
+				move_bull_closer_to_target()
 
 func _enter_state(new_state, old_state):
 	match new_state:
@@ -66,14 +96,19 @@ func _enter_state(new_state, old_state):
 			scan_for_targets()
 		States.TRACKING:
 			if target:
-				print("slow walk to ", target)
+				print("bull slow walk to ", target)
 				walk_to_far_cell(target)
 			else:
 				walk_to_random_nearby_tile()
 		States.GRAZING:
 			graze()
 		States.CHARGING:
-			print("charging at", target)
+			$LoseChargeTargetTimer.stop()
+			print("bull charging at", target)
+			move_bull_closer_to_target()
+		States.LOOSING_CHARGE_TARGET:
+			$LoseChargeTargetTimer.start()
+			move_bull_closer_to_target()
 
 func _exit_state(old_state, new_state):
 	match old_state:
@@ -128,3 +163,11 @@ func get_closest_target(array_of_targets):
 			closest_target = array_of_targets[t]
 			closest_path = aggregate_map.astar.get_point_path(cell.index, closest_target)
 	return closest_target
+
+func move_bull_closer_to_target():
+	facing = get_facing_from_angle(target.cell.map.z - cell.map.z, target.cell.map.x - cell.map.x)
+	move_to_next_cell_from_facing()
+
+func _on_lose_charge_target_timer_timeout():
+	target = null
+	set_state(States.SCANNING)
