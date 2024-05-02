@@ -1,13 +1,15 @@
-dog and player occupy cells, make sure that they dojnt blocke each other
+
 a bunch of != null exception handling should probably be consolidated
 
 
+bull AI - curious tracking super broken
+bull ai - collision and on reach targets functionalty
 
+dog ai - call and dismiss
+dog ai - dig search arrays
 
-
-bull AI
-grass level
 snowy bridge level leads to doctor house and grass level
+grass level/doctor house
 hell (suburbs)
 dream (grey, apple death) level
 temple level (minoutaur, flamingone is  bird hyroglyoph etc)
