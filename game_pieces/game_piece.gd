@@ -6,7 +6,15 @@ var cell
 #TODO: Generic walk speed which can be overwritten in the ready of each game peice, or remove thisd once the speeds and tweens are sorted out
 var walk_speed = 3
 var walk_tween
-var facing = 0
+var facing = 0 :
+	set(new_value):
+		facing = new_value
+		print(facing)
+		if facing % 5 == 0:
+			get_child(0).flip_h = true
+		elif facing == 2 || facing == 3:
+			get_child(0).flip_h = false
+
 #TODO: rename alal of these i have no idea what is waht
 func place_at(_cell):
 	cell = _cell

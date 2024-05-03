@@ -1,0 +1,84 @@
+[gd_scene load_steps=15 format=3 uid="uid://tvj1gasijf1l"]
+
+[ext_resource type="Script" path="res://environment/foliage.gd" id="1_6p7p1"]
+[ext_resource type="Texture2D" uid="uid://dgvcgs8w3tmml" path="res://assets/foliage/flower_edelweiss.svg" id="2_yhstg"]
+[ext_resource type="Texture2D" uid="uid://eaybqjhil4po" path="res://assets/foliage/flower_bleeding_heart.svg" id="3_j8257"]
+[ext_resource type="Texture2D" uid="uid://crrcilvg4osi3" path="res://assets/foliage/flower_aster.svg" id="3_lw7hb"]
+[ext_resource type="Texture2D" uid="uid://dvitd7tvnsj5" path="res://assets/foliage/flower_daisy.svg" id="4_aag03"]
+[ext_resource type="Texture2D" uid="uid://5xrnqsc4cn13" path="res://assets/foliage/flower_false_rue.svg" id="6_g0byg"]
+[ext_resource type="Texture2D" uid="uid://cush6itxkh5gq" path="res://assets/foliage/flower_geranium.svg" id="7_hknd5"]
+[ext_resource type="Texture2D" uid="uid://258sbs3e0ldg" path="res://assets/foliage/flower_ghost.svg" id="8_ofn53"]
+[ext_resource type="Texture2D" uid="uid://1p442d3cd8f4" path="res://assets/foliage/flower_lily.svg" id="9_xsp70"]
+[ext_resource type="Texture2D" uid="uid://4h0xjblpbg78" path="res://assets/foliage/flower_orchid.svg" id="10_m1228"]
+[ext_resource type="Texture2D" uid="uid://dx5u6nventrij" path="res://assets/foliage/flower_orchid_2.svg" id="11_334oy"]
+[ext_resource type="Texture2D" uid="uid://dhav6e623ks47" path="res://assets/foliage/flower_pansy.svg" id="12_5wfc2"]
+[ext_resource type="Texture2D" uid="uid://dbvv6od7afqw1" path="res://assets/foliage/flower_strife.svg" id="13_q1kfh"]
+[ext_resource type="Texture2D" uid="uid://bjx4117wtpra3" path="res://assets/foliage/flower_trillium.svg" id="14_fie8p"]
+
+[node name="Foliage" type="Node3D"]
+script = ExtResource("1_6p7p1")
+
+[node name="Aster" type="Sprite3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+offset = Vector2(130, 700)
+texture = ExtResource("3_lw7hb")
+
+[node name="BleedingHeart" type="Sprite3D" parent="."]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+offset = Vector2(120, 450)
+texture = ExtResource("3_j8257")
+
+[node name="Daisy" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+offset = Vector2(-550, 400)
+texture = ExtResource("4_aag03")
+
+[node name="Edelweiss" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+offset = Vector2(-210, 450)
+texture = ExtResource("2_yhstg")
+
+[node name="FalseRue" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+offset = Vector2(-50, 300)
+texture = ExtResource("6_g0byg")
+
+[node name="Geranium" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+offset = Vector2(-250, 350)
+texture = ExtResource("7_hknd5")
+
+[node name="Ghost" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+offset = Vector2(-420, 400)
+texture = ExtResource("8_ofn53")
+
+[node name="Lily" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+offset = Vector2(-250, 150)
+texture = ExtResource("9_xsp70")
+
+[node name="Orchid" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+offset = Vector2(-450, 550)
+texture = ExtResource("10_m1228")
+
+[node name="Orchid2" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+offset = Vector2(-550, 280)
+texture = ExtResource("11_334oy")
+
+[node name="Pansy" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+offset = Vector2(260, 550)
+texture = ExtResource("12_5wfc2")
+
+[node name="Strife" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+offset = Vector2(-380, 700)
+texture = ExtResource("13_q1kfh")
+
+[node name="Trillium" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+offset = Vector2(-200, 600)
+texture = ExtResource("14_fie8p")

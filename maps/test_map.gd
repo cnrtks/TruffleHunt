@@ -18,8 +18,10 @@ var spawn_tiles = [0, 1, 2, 3,]
 func _ready():
 	$AggregateMap.ready_aggregate_array($GridMap)
 	spawn_from_grid_map()
+	spawn_foliage()
 
 #TODO:this should probably be in aggregate map or combined with the ready function
+#TODO: used cells gives me the same cell like 50 times, try to figure out why or add all used cells to a dictionary so the cells are unique (FILTER DOES NOT WORK ON DICT but this can presumably be bypassed by getting all the values of a some dict, idk
 func spawn_from_grid_map():
 	var used_cells = $AggregateMap.grid_map.get_used_cells()
 	for c in used_cells:
@@ -62,6 +64,12 @@ func plant_truffle(pine_index):
 	add_child(new_truffle)
 	new_truffle.place_at_aggregate_index(potential_truffle_cells[randi_range(0, potential_truffle_cells.size() - 1)], false)
 	return potential_truffle_cells
+
+func spawn_foliage():
+	var v3_array = []
+	for c in $AggregateMap.aggregate_array:
+		v3_array.append(c.local)
+	$Foliage.spawn_foliage_on_array(v3_array)
 
 #TODO: this probably bleongs in a pet class but it calls astar
 #TODO: this seems a bit long considering its just returning coordiantes
