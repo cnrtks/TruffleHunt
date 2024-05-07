@@ -9,7 +9,6 @@ var walk_tween
 var facing = 0 :
 	set(new_value):
 		facing = new_value
-		print(facing)
 		if facing % 5 == 0:
 			get_child(0).flip_h = true
 		elif facing == 2 || facing == 3:
