@@ -13,3 +13,6 @@ grass level/doctor house
 hell (suburbs)
 dream (grey, apple death) level
 temple level (minoutaur, flamingone is  bird hyroglyoph etc)
+
+
+fix gamepad input (set to device 0 instead of all devices) remove deadzone and use get_vector

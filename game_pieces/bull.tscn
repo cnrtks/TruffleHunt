@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dm2uiimdx4f4v"]
 
 [ext_resource type="Script" path="res://game_pieces/bull.gd" id="1_02jf6"]
-[ext_resource type="Texture2D" uid="uid://dg3awe5qhym0t" path="res://assets/ai genertated teeth_0.jpg" id="2_ord1x"]
+[ext_resource type="Texture2D" uid="uid://b65t070e3j6q2" path="res://assets/bull.svg" id="2_r4o51"]
 
 [sub_resource type="TorusMesh" id="TorusMesh_q3tqr"]
 inner_radius = 0.2
@@ -19,11 +19,12 @@ height = 0.3
 script = ExtResource("1_02jf6")
 
 [node name="BullSprite" type="Sprite3D" parent="."]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
-texture = ExtResource("2_ord1x")
+transform = Transform3D(0.0823284, 0, 0, 0, 0.0823284, 0, 0, 0, 0.1, -5.96046e-08, 1.1, 0)
+texture = ExtResource("2_r4o51")
 
 [node name="Torus" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+visible = false
 mesh = SubResource("TorusMesh_q3tqr")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Torus"]

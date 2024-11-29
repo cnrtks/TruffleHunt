@@ -37,8 +37,8 @@ func _exit_state(old_state, new_state):
 func _handle_move_input():
 	if state == States.IDLE:
 		if Input.is_action_pressed("select"): player_selected_cell()
-		var x = Input.get_joy_axis(0, JOY_AXIS_LEFT_X)
-		var y = Input.get_joy_axis(0, JOY_AXIS_LEFT_Y)
+		var x = Input.get_joy_axis(1, JOY_AXIS_LEFT_X)
+		var y = Input.get_joy_axis(1, JOY_AXIS_LEFT_Y)
 		if x > deadzone || x < -deadzone || y > deadzone || y < -deadzone: move_player(x,y)
 
 func move_player(x_axis, y_axis):

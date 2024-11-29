@@ -161,7 +161,7 @@ func get_closest_target(array_of_targets):
 	for t in range(1, array_of_targets.size()):
 		if aggregate_map.astar.get_point_path(cell.index, array_of_targets[t].cell.index).size() < closest_path.size():
 			closest_target = array_of_targets[t]
-			closest_path = aggregate_map.astar.get_point_path(cell.index, closest_target)
+			closest_path = aggregate_map.astar.get_point_path(cell.index, closest_target.cell.index)
 	return closest_target
 
 func move_bull_closer_to_target():
